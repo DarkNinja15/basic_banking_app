@@ -1,3 +1,4 @@
+import 'package:banking_app/pages/info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -66,6 +67,19 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepPurpleAccent,
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => InfoPage(),
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.person,
           ),
         ),
       ),
