@@ -106,6 +106,8 @@ class _HomePageState extends State<HomePage> {
                                       namecontroller.text,
                                       double.parse(amtcontroller.text),
                                     );
+                                    amtcontroller.text = "";
+                                    namecontroller.text = "";
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.purple,

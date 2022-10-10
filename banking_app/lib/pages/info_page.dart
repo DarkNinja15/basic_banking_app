@@ -63,7 +63,7 @@ class _InfoPageState extends State<InfoPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              content: Text("Money Transfred"),
+                              content: Text("Money Added"),
                             );
                           });
                     },
