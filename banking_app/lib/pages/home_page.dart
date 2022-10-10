@@ -1,9 +1,26 @@
 import 'package:banking_app/pages/info_page.dart';
+import 'package:banking_app/providers/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart' as pro;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController amtcontroller = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    namecontroller.dispose();
+    amtcontroller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +63,58 @@ class HomePage extends StatelessWidget {
                 height: size.height * 0.02,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  controller: namecontroller,
+                                  keyboardType: TextInputType.text,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Enter name of customer',
+                                  ),
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.03,
+                                ),
+                                TextField(
+                                  controller: amtcontroller,
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Enter balance'),
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.03,
+                                ),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    pro.Provider.of<Provider>(context,
+                                            listen: false)
+                                        .addCustomer(
+                                      namecontroller.text,
+                                      double.parse(amtcontroller.text),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.purple,
+                                  ),
+                                  icon: const Icon(Icons.person_add),
+                                  label: const Text('Add Customer'),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: SizedBox(

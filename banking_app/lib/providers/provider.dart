@@ -12,4 +12,14 @@ class Provider with ChangeNotifier {
     _customer[0].balance += amt;
     notifyListeners();
   }
+
+  addCustomer(String name, double amt) {
+    _customer.add(User(
+      name: name,
+      balance: amt,
+      id: _customer.length.toString(),
+    ));
+    print('length = ${_customer.length}');
+    notifyListeners();
+  }
 }

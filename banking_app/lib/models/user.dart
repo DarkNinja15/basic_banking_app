@@ -1,9 +1,9 @@
 class User {
-  String id;
+  String? id;
   String name;
   double balance;
   User({
-    required this.id,
+    this.id,
     required this.name,
     required this.balance,
   });

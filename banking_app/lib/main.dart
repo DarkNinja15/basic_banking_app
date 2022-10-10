@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as pro;
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-          home: HomePage(),
+          home: const HomePage(),
           theme: ThemeData(
             fontFamily: GoogleFonts.roboto().fontFamily,
           )),
