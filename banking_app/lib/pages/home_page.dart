@@ -1,4 +1,5 @@
 import 'package:banking_app/pages/info_page.dart';
+import 'package:banking_app/pages/view_customers_page.dart';
 import 'package:banking_app/providers/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,7 +40,10 @@ class _HomePageState extends State<HomePage> {
                 height: size.height * 0.1,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ViewPage()));
+                },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: SizedBox(
