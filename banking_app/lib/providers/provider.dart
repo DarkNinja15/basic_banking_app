@@ -40,7 +40,7 @@ class Provider with ChangeNotifier {
               backgroundColor: Colors.greenAccent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20))),
-              content: Text("Money Transfred"),
+              content: Text("Money Transfered"),
             );
           });
     } else {
