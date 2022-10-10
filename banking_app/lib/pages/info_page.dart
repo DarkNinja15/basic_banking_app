@@ -1,5 +1,8 @@
+import 'package:banking_app/models/user.dart';
+import 'package:banking_app/providers/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart' as pro;
 
 class InfoPage extends StatefulWidget {
   @override
@@ -7,58 +10,7 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-  double amt = 100000000.00;
-
   TextEditingController amtcontroller = TextEditingController();
-
-  add_remove_Money(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    controller: amtcontroller,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter ammount to be added',
-                    ),
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    setState(() {
-                      amt += double.parse(amtcontroller.text);
-                      Navigator.of(context).pop();
-                    });
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AlertDialog(
-                            title: Text("Success"),
-                            titleTextStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 20),
-                            backgroundColor: Colors.greenAccent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            content: Text("Money Transfred"),
-                          );
-                        });
-                  },
-                  icon: const Icon(Icons.attach_money),
-                  label: const Text('ADD'),
-                )
-              ],
-            ),
-          );
-        });
-  }
 
   @override
   void dispose() {
@@ -68,7 +20,65 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final customer = pro.Provider.of<Provider>(context);
     final size = MediaQuery.of(context).size;
+
+    add_remove_Money(double amt) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      controller: amtcontroller,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter ammount to be added',
+                      ),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        pro.Provider.of<Provider>(context, listen: false)
+                            .addMoneyInuserone(
+                                double.parse(amtcontroller.text));
+                        amtcontroller.text = "";
+                        Navigator.of(context).pop();
+                      });
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              title: Text("Success"),
+                              titleTextStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 20),
+                              backgroundColor: Colors.greenAccent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              content: Text("Money Transfred"),
+                            );
+                          });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.purpleAccent,
+                    ),
+                    icon: const Icon(Icons.attach_money),
+                    label: const Text('ADD'),
+                  )
+                ],
+              ),
+            );
+          });
+    }
+
     return SafeArea(
       child: Scaffold(
           body: Column(
@@ -107,7 +117,7 @@ class _InfoPageState extends State<InfoPage> {
                   color: Colors.purple,
                   width: size.width * 0.7,
                   child: Text(
-                    'Balance = $amt',
+                    'Balance = ${(customer.user)[0].balance}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -123,7 +133,9 @@ class _InfoPageState extends State<InfoPage> {
             borderRadius: BorderRadius.circular(20),
             child: TextButton.icon(
               onPressed: () {
-                add_remove_Money(context);
+                add_remove_Money(
+                  (customer.user)[0].balance,
+                );
               },
               icon: const Icon(
                 Icons.monetization_on,

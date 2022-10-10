@@ -1,7 +1,7 @@
 class User {
-  final String id;
-  final String name;
-  final double balance;
+  String id;
+  String name;
+  double balance;
   User({
     required this.id,
     required this.name,

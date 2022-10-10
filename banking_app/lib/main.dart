@@ -1,6 +1,8 @@
 import 'package:banking_app/pages/home_page.dart';
+import 'package:banking_app/providers/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart' as pro;
 
 void main() {
   runApp(MyApp());
@@ -11,10 +13,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: HomePage(),
-        theme: ThemeData(
-          fontFamily: GoogleFonts.roboto().fontFamily,
-        ));
+    return pro.MultiProvider(
+      providers: [
+        pro.ChangeNotifierProvider(
+          create: (_) => Provider(),
+        )
+      ],
+      child: MaterialApp(
+          home: HomePage(),
+          theme: ThemeData(
+            fontFamily: GoogleFonts.roboto().fontFamily,
+          )),
+    );
   }
 }
